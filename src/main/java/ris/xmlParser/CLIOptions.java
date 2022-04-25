@@ -7,8 +7,6 @@ public class CLIOptions {
     private static String INPUT_FILE_OPTION = "input";
     private static String INPUT_FILE_SHORT_OPTION = "i";
 
-//    private static String OUTPUT_FILE_OPTION = "output";
-//    private static String OUTPUT_FILE_SHORT_OPTION = "o";
 
     private final CommandLine commandLine;
     private static Options buildOptions(){
