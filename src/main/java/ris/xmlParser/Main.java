@@ -25,7 +25,6 @@ public class Main {
         catch (ParseException exc){
             LOGGER.error(exc.getMessage(), exc);
             CLIOptions.printHelp();
-            System.exit(0);
         }
         catch (XMLStreamException | IOException e) {
             LOGGER.error(e.getMessage(), e);
