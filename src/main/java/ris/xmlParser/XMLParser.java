@@ -56,10 +56,7 @@ public class XMLParser {
         if (user == null)
             return;
 
-        Integer value = 1;
-        if (result.userChanges.containsKey(user)){
-         value += result.userChanges.get(user);
-        }
+        Integer value = result.userChanges.getOrDefault(user, 1);;
         result.userChanges.put(user, value);
     }
 
@@ -73,10 +70,7 @@ public class XMLParser {
             if (name == null){
                 return;
             }
-            Integer value = 1;
-            if (result.nameRepetition.containsKey(name)){
-                value += result.nameRepetition.get(name);
-            }
+            Integer value = result.nameRepetition.getOrDefault(name, 1);
             result.nameRepetition.put(name, value);
         }
     }
