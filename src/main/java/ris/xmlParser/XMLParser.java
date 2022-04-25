@@ -10,12 +10,11 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+
 import java.util.ArrayDeque;
-import java.util.ArrayList;
+
 import java.util.Deque;
-import java.util.List;
+
 
 public class XMLParser {
     public static final Logger LOGGER = LoggerFactory.getLogger(XMLParser.class);
@@ -42,9 +41,8 @@ public class XMLParser {
                 else if (isTag(startElement)){
                     processTag(parents.getLast(), startElement, result);
                 }
-                if (!item.isEndElement()){
-                    parents.addLast(startElement);
-                }
+                parents.addLast(startElement);
+
             }
             else if (item.isEndElement()){
                 parents.removeLast();

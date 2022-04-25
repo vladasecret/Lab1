@@ -37,10 +37,10 @@ public class Main {
     }
 
     public static void printResult(XMLParsedResult result){
-        System.out.println("User changes: ");
+        System.out.println("-------------------User changes-------------------");
         printSorted(result.userChanges);
 
-        System.out.println("Name repetition: ");
+        System.out.println("-------------------Name repetition-------------------");
         printSorted(result.nameRepetition);
     }
 
