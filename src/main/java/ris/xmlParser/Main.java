@@ -4,10 +4,13 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ris.xmlParser.parser.XMLParsedResult;
+import ris.xmlParser.parser.XMLParser;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Map;
 
 public class Main {
@@ -27,7 +30,7 @@ public class Main {
             LOGGER.error(exc.getMessage(), exc);
             CLIOptions.printHelp();
         }
-        catch (XMLStreamException | IOException | JAXBException e) {
+        catch (XMLStreamException | IOException | JAXBException | SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
     }

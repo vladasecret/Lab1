@@ -1,21 +1,44 @@
-package ris.xmlParser;
+package ris.xmlParser.parser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ris.generated.osmSchema.Node;
 import ris.generated.osmSchema.Tag;
+import ris.xmlParser.NodeReader;
+import ris.xmlParser.db.ConnectionManager;
+import ris.xmlParser.db.DatabaseInitializer;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class XMLParser {
     public static final Logger LOGGER = LoggerFactory.getLogger(XMLParser.class);
 
-    private final XMLInputFactory xmlFactory = XMLInputFactory.newDefaultFactory();
+    //private final XMLInputFactory xmlFactory = XMLInputFactory.newDefaultFactory();
 
-    public XMLParsedResult parse(NodeReader nodeReader) throws XMLStreamException, JAXBException {
+    private Connection connection;
+
+    public XMLParsedResult parse(NodeReader nodeReader) throws XMLStreamException, JAXBException, SQLException {
         XMLParsedResult result = new XMLParsedResult();
+        try{
+            connection = ConnectionManager.getConnection();
+            DatabaseInitializer initializer = new DatabaseInitializer();
+            initializer.dropTables();
+            initializer.createTables();
+            connection.commit();
+        } catch (SQLException  e) {
+            if (connection != null && !connection.isClosed()){
+                connection.rollback();
+                connection.close();
+            }
+            LOGGER.error(e. getMessage());
+            throw e;
+        }
+
         while (nodeReader.hasNext()){
             Node node = nodeReader.nextNode();
             processNode(node, result);

@@ -1,4 +1,4 @@
-package ris.xmlParser;
+package ris.xmlParser.parser;
 
 import java.util.HashMap;
 import java.util.Map;
