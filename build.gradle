@@ -1,6 +1,11 @@
+
+
 plugins {
     id 'java'
+    id "com.intershop.gradle.jaxb" version "4.4.1"
 }
+
+
 
 group 'org.example'
 version '1.0-SNAPSHOT'
@@ -9,11 +14,40 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    jaxbext
+}
+
 dependencies {
     implementation 'org.slf4j:slf4j-log4j12:1.7.36'
     implementation 'org.apache.commons:commons-compress:1.21'
     implementation 'commons-cli:commons-cli:1.5.0'
+
+
+//    //implementation("com.sun.xml.bind:jaxb-xjc:2.4.0-b180830.0438")
+//    implementation("com.sun.xml.bind:jaxb-impl:2.4.0-b180830.0438")
+//    //implementation("com.sun.xml.bind:jaxb-core:2.3.0.1")
+//    implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
+//    implementation("javax.activation:activation:1.1.1
+    implementation "javax.xml.bind:jaxb-api:2.2.4"
+    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+    jaxb "com.sun.xml.bind:jaxb-jxc:2.2.11"
+    jaxb "com.sun.xml.bind:jaxb-xjc:2.2.11"
+    jaxb "com.sun.xml.bind:jaxb-core:2.2.11"
+    jaxbext 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3'
 }
+
+jaxb {
+    javaGen {
+        name {
+            packageName = 'ris.generated.osmSchema'
+            outputDir = file('./src/main/java')
+            schema = file('./src/main/resources/OSMSchema.xsd')
+        }
+    }
+}
+
+
 
 test {
     useJUnitPlatform()

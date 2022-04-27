@@ -5,6 +5,7 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
 import java.util.Map;
@@ -17,8 +18,8 @@ public class Main {
             CLIOptions cliOptions = new CLIOptions(args);
             String inputPath = cliOptions.getInputPath();
 
-            try(InputStream inputStream = getXMLInput(inputPath)){
-                XMLParsedResult result = new XMLParser().parse(inputStream);
+            try(NodeReader reader = new NodeReader(getXMLInput(inputPath))){
+                XMLParsedResult result = new XMLParser().parse(reader);
                 printResult(result);
             }
         }
@@ -26,7 +27,7 @@ public class Main {
             LOGGER.error(exc.getMessage(), exc);
             CLIOptions.printHelp();
         }
-        catch (XMLStreamException | IOException e) {
+        catch (XMLStreamException | IOException | JAXBException e) {
             LOGGER.error(e.getMessage(), e);
         }
     }
